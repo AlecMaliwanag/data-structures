@@ -9,13 +9,11 @@ var Queue = function() {
   };
 
   someInstance.dequeue = function() {
-    if (counter > 0) {
-      var keys = Object.keys(storage);
-      
-      var shifted = storage[keys[0]];
-      delete storage[keys[0]];
-      return shifted;
-    }
+    var keys = Object.keys(storage);
+    var shifted = storage[keys[0]];
+    delete storage[keys[0]];
+    return shifted;
+    
   };
 
   someInstance.size = function() {
