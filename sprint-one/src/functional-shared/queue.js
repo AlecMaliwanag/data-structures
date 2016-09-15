@@ -3,8 +3,8 @@ var Queue = function() {
   var someInstance = {};
   
   someInstance.storage = {};
-  someInstance.count = 0;
-  //someInstance.keys;
+  someInstance.tail = 0;
+  someInstance.head = 0;
 
   _.extend(someInstance, queueMethods);
 
@@ -14,19 +14,20 @@ var Queue = function() {
 var queueMethods = {};
 
 queueMethods.enqueue = function(value) {
-  this.storage[this.count++] = value;
+  this.storage[this.tail++] = value;
 };
 
 queueMethods.dequeue = function() {
-  this.keys = Object.keys(this.storage);
-  this.shifted = this.storage[this.keys[0]];
-  delete this.storage[this.keys[0]];
-  return this.shifted;
+  if (this.head !== this.tail) {
+    var hold = this.storage[this.head];
+    delete this.storage[this.head];
+    this.head++;
+    return hold;
+  }
 };
 
 queueMethods.size = function() {
-  this.keys = Object.keys(this.storage);
-  return this.keys.length;
+  return this.tail - this.head;
 };
 
 
