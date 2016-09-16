@@ -13,7 +13,7 @@ HashTable.prototype.insert = function(k, v) {
     var toggle = false;
 
     for (var i = 0; i < temp.length; i++) {
-      console.log(temp[i]);
+      //console.log(temp[i]);
       if (temp[i][0] === k) {
         temp[i][1] = v;
         toggle = true;
