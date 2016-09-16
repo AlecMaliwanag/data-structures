@@ -61,12 +61,20 @@ Graph.prototype.removeEdge = function(fromNode, toNode) {
 Graph.prototype.forEachNode = function(cb) {
   this.storage.forEach(node => cb(node));
 };
-// var node = function(value) {
-//   this.value = value;
-//   this.edge = {};
-// };
+
 /*
  * Complexity: What is the time complexity of the above functions?
+addNode: constant 
+contains: linear
+removeNode: is this n2 or n * x ????????????
+hasEdge: 3n or n3 ?????????????????????
+addEdge: constant
+removeEdge: linear;
+forEachNode: linear
+
+
+
+
  */
 
 
