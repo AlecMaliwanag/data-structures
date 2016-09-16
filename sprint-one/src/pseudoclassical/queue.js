@@ -1,4 +1,5 @@
 var Queue = function() {
+  
   this.storage = {};
   this.tail = 0;
   this.head = 0;
