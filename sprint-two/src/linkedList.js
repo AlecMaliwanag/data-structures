@@ -1,9 +1,12 @@
+
+
 var LinkedList = function() {
   var list = {};
   list.head = null;
   list.tail = null;
 
   list.addToTail = function(value) {
+
     var node = Node(value);
     if (list.head === null) {
       list.head = node;
@@ -12,11 +15,16 @@ var LinkedList = function() {
       list.tail.next = node;
       list.tail = node;
     }
-    
+   
   };
 
   list.removeHead = function() {
+
+    if (list.head === null) {
+      return "error";
+    }
     var severedHead = list.head.value;
+    
     list.head = list.head.next;
     return severedHead;
 
@@ -38,7 +46,6 @@ var LinkedList = function() {
     return recurse(list.head, target);
 
   };
-
 
   return list;
 };

@@ -8,6 +8,9 @@ BinarySearchTree.prototype.insert = function(value) {
   var BST = new BinarySearchTree(value);
   
   var recurse = function (node, value) {
+    if (value === node.value) {
+      return;
+    } 
     if (value > node.value) {
       if (node.right === undefined) {
         node.right = BST;

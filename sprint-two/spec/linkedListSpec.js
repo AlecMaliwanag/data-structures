@@ -51,5 +51,11 @@ describe('linkedList', function() {
     expect(linkedList.contains(4)).to.equal(false);
   });
 
+  it('should console.log error when head is null and removehead is invoked', function() {
+    linkedList.addToTail(5);
+    linkedList.removeHead();
+    linkedList.removeHead();
+    expect(linkedList.removeHead()).to.equal("error");
+  });
   // add more tests here to test the functionality of linkedList
 });

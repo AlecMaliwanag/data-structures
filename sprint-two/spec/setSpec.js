@@ -24,4 +24,11 @@ describe('set', function() {
     expect(set.contains('Mel Gibson')).to.equal(false);
   });
 
+  it('should not store null or undefined', function() { 
+    set.add('Robin Kuehn');
+    set.add(null);
+    expect(set.contains(null)).to.equal(false);
+
+  });
+
 });

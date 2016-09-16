@@ -8,6 +8,7 @@ describe('tree', function() {
   it('should have methods named "addChild" and "contains", and a property named "value"', function() {
     expect(tree.addChild).to.be.a('function');
     expect(tree.contains).to.be.a('function');
+    expect(tree.each).to.be.a('function');
     expect(tree.hasOwnProperty('value')).to.equal(true);
   });
 
@@ -39,6 +40,22 @@ describe('tree', function() {
     tree.children[1].addChild(8);
     expect(tree.contains(7)).to.equal(true);
     expect(tree.contains(8)).to.equal(true);
+  });
+
+  it(' should correctly call the callback on each node', function() {
+    var multiplyByTwo = function(x) { return x * 2};
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.addChild(3);
+    tree.children[0].addChild(7);
+    tree.children[1].addChild(8);
+    expect((tree.children[0].value)).to.equal(5);
+    expect(tree.children[0].children[0].value).to.equal(7);
+    tree.each(multiplyByTwo);
+    expect((tree.children[0].value)).to.equal(10);
+    expect(tree.children[0].children[0].value).to.equal(14);
+
+
   });
 
 });
