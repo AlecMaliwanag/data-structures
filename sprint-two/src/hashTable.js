@@ -54,7 +54,7 @@ HashTable.prototype.doubledown = function() {
 
   tempStorage = _.flatten(tempStorage, true);
   this._limit = this._limit * 2;
-  console.log(this._limit);
+  //console.log(this._limit);
   this._storage = LimitedArray(this._limit);
   for (var i = 0; i < tempStorage.length; i ++) {
     this.insert(tempStorage[i][0], tempStorage[i][1]);
@@ -75,7 +75,7 @@ HashTable.prototype.tummytuck = function() {
 
   tempStorage = _.flatten(tempStorage, true);
   this._limit = Math.floor(this._limit / 2);
-  console.log(this._limit);
+  //console.log(this._limit);
   this._storage = LimitedArray(this._limit);
   for (var i = 0; i < tempStorage.length; i ++) {
     this.insert(tempStorage[i][0], tempStorage[i][1]);

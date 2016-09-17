@@ -74,7 +74,7 @@ describe('graph', function() {
     graph.addNode(2);
     graph.addNode(1);
     graph.addEdge(5, 7);
-    console.log(graph.edges);
+    //console.log(graph.edges);
     expect(graph.edges.length).to.equal(0);  
   });
 });

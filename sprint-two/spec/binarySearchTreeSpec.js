@@ -43,4 +43,20 @@ describe('binarySearchTree', function() {
     binarySearchTree.insert(3);
     expect(binarySearchTree.left.left.right).to.equal(undefined);
   });
+
+  it('should return the level when this.level is called', function() {
+    binarySearchTree.insert(6);
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(1);
+    expect(binarySearchTree.left.left.level).to.equal(3);
+  });
+
+  it('should run the callback in breadthFirst order', function() {
+    binarySearchTree.insert(6);
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(7);
+    binarySearchTree.insert(1);
+    binarySearchTree.breadthFirstLog(function(value) {console.log(value)});
+  });
+
 });
