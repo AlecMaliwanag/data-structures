@@ -2,14 +2,25 @@ describe('tree', function() {
   var tree;
 
   beforeEach(function() {
-    tree = Tree();
+    tree = new Tree(10);
   });
 
-  it('should have methods named "addChild" and "contains", and a property named "value"', function() {
+  it('should have methods named "addChild," "removeFromParent," "traverse," and "contains", and a property named "value"', function() {
     expect(tree.addChild).to.be.a('function');
     expect(tree.contains).to.be.a('function');
-    expect(tree.each).to.be.a('function');
+    expect(tree.traverse).to.be.a('function');
+    expect(tree.removeFromParent).to.be.a('function');
     expect(tree.hasOwnProperty('value')).to.equal(true);
+    expect(tree.hasOwnProperty('parent')).to.equal(true);
+  });
+
+  it('should return the value of the removed node when removeFromParent is called', function() {
+    tree.addChild(5);
+    tree.addChild(59);
+    tree.children[0].addChild(7);
+    expect(tree.children[0].removeFromParent()).to.equal(5);
+    expect(tree.children.length).to.equal(1);
+   
   });
 
   it('should add children to the tree', function() {
@@ -43,7 +54,10 @@ describe('tree', function() {
   });
 
   it(' should correctly call the callback on each node', function() {
-    var multiplyByTwo = function(x) { return x * 2};
+    var multiplyByTwo = function(x) { 
+      return x * 2;
+    };
+    
     tree.addChild(5);
     tree.addChild(6);
     tree.addChild(3);
@@ -51,7 +65,7 @@ describe('tree', function() {
     tree.children[1].addChild(8);
     expect((tree.children[0].value)).to.equal(5);
     expect(tree.children[0].children[0].value).to.equal(7);
-    tree.each(multiplyByTwo);
+    tree.traverse(multiplyByTwo);
     expect((tree.children[0].value)).to.equal(10);
     expect(tree.children[0].children[0].value).to.equal(14);
 

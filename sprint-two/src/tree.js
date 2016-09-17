@@ -1,23 +1,16 @@
 var Tree = function(value) {
-  var newTree = {};
-  newTree.value = value;
-
-  // your code here
-  newTree.children = [];  // fix me
-
-  _.extend(newTree, treeMethods);
-
-  return newTree;
+  this.value = value;
+  this.children = [];
+  this.parent = null;
 };
 
-var treeMethods = {};
-
-treeMethods.addChild = function(value) {
-  var tree = Tree(value);
+Tree.prototype.addChild = function(value) {
+  var tree = new Tree(value);
   this.children.push(tree);
+  tree.parent = this;
 };
 
-treeMethods.contains = function(target) {
+Tree.prototype.contains = function(target) {
   var found = false;
   var recurse = function(node, target) { 
     if (node.value === target) {
@@ -34,7 +27,17 @@ treeMethods.contains = function(target) {
   return found;
 };
 
-treeMethods.each = function(cb) {
+Tree.prototype.removeFromParent = function() {
+  var storage = this.parent;
+  var index = _.indexOf(storage.children, this);
+  storage.children.splice(index, 1);
+  return this.value;
+  
+};
+
+
+
+Tree.prototype.traverse = function(cb) {
 
   var recurse = function(node, cb) { 
     node.value = cb(node.value);
