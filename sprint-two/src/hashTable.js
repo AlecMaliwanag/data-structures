@@ -13,17 +13,16 @@ HashTable.prototype.insert = function(k, v) {
 
   if (this._storage.get(index) !== undefined) {
     var temp = this._storage.get(index);
-    //console.log(index, temp)
     var toggle = false;
-    //find index
-    for (var i = 0; i < temp.length; i++) {
-      //console.log(temp[i]);
-      if (temp[i][0] === k) {
-        temp[i][1] = v;
+
+    temp.forEach(function(tuple) {
+      if (tuple[0] === k) {
+        tuple[1] = v;
         toggle = true;
-        this.counter--;
-      } 
-    }
+        this.counter --;
+      }
+    });
+    
     if (toggle === false) {
       temp.push([k, v]);
     }

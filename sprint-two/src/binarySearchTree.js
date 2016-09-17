@@ -1,6 +1,5 @@
 var BinarySearchTree = function(value) {
-  this.left;
-  this.right;
+  this.left, this.right;
   this.value = value;
   this.level = 1;
   this.maxDepth = 1;
@@ -9,7 +8,16 @@ var BinarySearchTree = function(value) {
 BinarySearchTree.prototype.insert = function(value) {
   var BST = new BinarySearchTree(value);
   var originalTree = this;
-  
+
+  var checker = function() { 
+    if (originalTree.maxDepth < BST.level) {
+      originalTree.maxDepth = BST.level;
+    }
+    if ((originalTree.maxDepth / 2) > originalTree.findMin()) {
+      originalTree.rebalance();
+    }
+  };
+
   var recurse = function (node, value) {
     if (value === node.value) {
       return;
@@ -18,12 +26,7 @@ BinarySearchTree.prototype.insert = function(value) {
       if (node.right === undefined) {
         node.right = BST;
         node.right.level = node.level + 1;
-        if (originalTree.maxDepth < BST.level) {
-          originalTree.maxDepth = BST.level;
-        }
-        if ((originalTree.maxDepth / 2) > originalTree.findMin()) {
-          originalTree.rebalance();
-        }
+        checker();
       } else {
         recurse(node.right, value);
       }
@@ -31,19 +34,12 @@ BinarySearchTree.prototype.insert = function(value) {
       if (node.left === undefined) {
         node.left = BST;
         node.left.level = node.level + 1;
-        if (originalTree.maxDepth < BST.level) {
-          originalTree.maxDepth = BST.level;
-        }
-        if ((originalTree.maxDepth / 2) > originalTree.findMin()) {
-          return originalTree.rebalance();
-
-        }
+        checker();
       } else {
         recurse(node.left, value);
       }
     }
   };
-
   recurse(this, value);
 
 };
@@ -79,34 +75,21 @@ BinarySearchTree.prototype.contains = function(value) {
         } else {
           traverse(node.right, value);
         }
-      }
-    } else {
-      if (node.left !== undefined) {
-        if (node.left.value === value) {
-          result = true;
-        } else {
-          traverse(node.left, value);
+      } else {
+        if (node.left !== undefined) {
+          if (node.left.value === value) {
+            result = true;
+          } else {
+            traverse(node.left, value);
+          }
         }
-      }
-    }  
+      }  
+    }
   };
-
   traverse(this, value);
   return result;
 };
 
-BinarySearchTree.prototype.depthFirstLog = function(cb) {
-  var traverse = function (node, cb) {
-    cb(node.value);
-    if (node.left !== undefined) {
-      traverse(node.left, cb);
-    }
-    if (node.right !== undefined) {
-      traverse(node.right, cb);
-    }
-  };
-  traverse(this, cb);
-};
 
 BinarySearchTree.prototype.findMin = function() {
   var result = this.maxDepth;
@@ -125,6 +108,19 @@ BinarySearchTree.prototype.findMin = function() {
   };
   traverse(this);
   return result;
+};
+
+BinarySearchTree.prototype.depthFirstLog = function(cb) {
+  var traverse = function (node, cb) {
+    cb(node.value);
+    if (node.left !== undefined) {
+      traverse(node.left, cb);
+    }
+    if (node.right !== undefined) {
+      traverse(node.right, cb);
+    }
+  };
+  traverse(this, cb);
 };
 
 BinarySearchTree.prototype.breadthFirstLog = function(cb) {
