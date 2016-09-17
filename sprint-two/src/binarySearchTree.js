@@ -23,7 +23,6 @@ BinarySearchTree.prototype.insert = function(value) {
         }
         if ((originalTree.maxDepth / 2) > originalTree.findMin()) {
           originalTree.rebalance();
-
         }
       } else {
         recurse(node.right, value);
@@ -36,7 +35,7 @@ BinarySearchTree.prototype.insert = function(value) {
           originalTree.maxDepth = BST.level;
         }
         if ((originalTree.maxDepth / 2) > originalTree.findMin()) {
-          originalTree.rebalance();
+          return originalTree.rebalance();
 
         }
       } else {
@@ -52,13 +51,22 @@ BinarySearchTree.prototype.insert = function(value) {
 BinarySearchTree.prototype.rebalance = function() {
   var storage = [];
   var middle;
+  var rebalancedTree = this;
   this.depthFirstLog(function(node) {
-    storage.push(node.value);
+    storage.push(node);
   }); 
   storage = storage.sort(function(a, b) {
     return a - b;
   });
-  middle = storage[Math.floor(storage.length / 2)];
+  middle = storage.splice(Math.floor(storage.length / 2), 1);
+  rebalancedTree.value = middle[0];
+  rebalancedTree.left = undefined;
+  rebalancedTree.right = undefined;
+  rebalancedTree.maxDepth = 1;
+  for (var i = 0; i < storage.length; i++) {
+    rebalancedTree.insert(storage[i]);
+  }
+  console.log(this.left, this, this.right);
 };
 
 BinarySearchTree.prototype.contains = function(value) {

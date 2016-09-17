@@ -56,7 +56,7 @@ describe('binarySearchTree', function() {
     binarySearchTree.insert(3);
     binarySearchTree.insert(7);
     binarySearchTree.insert(1);
-    binarySearchTree.breadthFirstLog(function(value) {console.log(value)});
+    //binarySearchTree.breadthFirstLog(function(value) {console.log(value)});
   });
 
   it('should return the minDepth when findMin is called', function() {
@@ -66,4 +66,19 @@ describe('binarySearchTree', function() {
     binarySearchTree.insert(1);
     expect(binarySearchTree.findMin()).to.equal(2);
   });
+
+  it('should rebalance an unbalanced tree', function() {
+    binarySearchTree.insert(5);
+    binarySearchTree.insert(1);
+    binarySearchTree.insert(14);
+    binarySearchTree.insert(16);
+    binarySearchTree.insert(15);
+    binarySearchTree.insert(17);
+    binarySearchTree.insert(18);
+    expect(binarySearchTree.value).to.equal(15);
+    expect(binarySearchTree.left.right.right.value).to.equal(14);
+    expect(binarySearchTree.right.right.value).to.equal(17);
+  });
+
+
 });
