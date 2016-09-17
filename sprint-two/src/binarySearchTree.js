@@ -21,6 +21,10 @@ BinarySearchTree.prototype.insert = function(value) {
         if (originalTree.maxDepth < BST.level) {
           originalTree.maxDepth = BST.level;
         }
+        if ((originalTree.maxDepth / 2) > originalTree.findMin()) {
+          originalTree.rebalance();
+
+        }
       } else {
         recurse(node.right, value);
       }
@@ -31,6 +35,10 @@ BinarySearchTree.prototype.insert = function(value) {
         if (originalTree.maxDepth < BST.level) {
           originalTree.maxDepth = BST.level;
         }
+        if ((originalTree.maxDepth / 2) > originalTree.findMin()) {
+          originalTree.rebalance();
+
+        }
       } else {
         recurse(node.left, value);
       }
@@ -39,6 +47,18 @@ BinarySearchTree.prototype.insert = function(value) {
 
   recurse(this, value);
 
+};
+
+BinarySearchTree.prototype.rebalance = function() {
+  var storage = [];
+  var middle;
+  this.depthFirstLog(function(node) {
+    storage.push(node.value);
+  }); 
+  storage = storage.sort(function(a, b) {
+    return a - b;
+  });
+  middle = storage[Math.floor(storage.length / 2)];
 };
 
 BinarySearchTree.prototype.contains = function(value) {
@@ -78,6 +98,25 @@ BinarySearchTree.prototype.depthFirstLog = function(cb) {
     }
   };
   traverse(this, cb);
+};
+
+BinarySearchTree.prototype.findMin = function() {
+  var result = this.maxDepth;
+  var traverse = function (node) {
+    if (node.left === undefined && node.right === undefined) {
+      if (node.level < result) {
+        result = node.level;
+      }
+    }
+    if (node.left !== undefined) {
+      traverse(node.left);
+    }
+    if (node.right !== undefined) {
+      traverse(node.right);
+    }
+  };
+  traverse(this);
+  return result;
 };
 
 BinarySearchTree.prototype.breadthFirstLog = function(cb) {

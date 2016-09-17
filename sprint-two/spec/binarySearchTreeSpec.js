@@ -59,4 +59,11 @@ describe('binarySearchTree', function() {
     binarySearchTree.breadthFirstLog(function(value) {console.log(value)});
   });
 
+  it('should return the minDepth when findMin is called', function() {
+    binarySearchTree.insert(6);
+    binarySearchTree.insert(9);
+    binarySearchTree.insert(10);
+    binarySearchTree.insert(1);
+    expect(binarySearchTree.findMin()).to.equal(2);
+  });
 });
